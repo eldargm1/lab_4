@@ -28,20 +28,19 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        // Первая строка: Фамилия и группа латиницей
-        System.out.println("Aliev E.N., group 3821B1PR1");
+        System.out.println("Aliev E.N., group 3821B1PRpp2");
 
         List<BookRecord> journal = getInitialJournal();
 
         // 1) Всего записей в журнале
         System.out.println("1) Записей в журнале: " + journal.size());
 
-        // 2) Уникальных книг (LinkedHashSet сохраняет порядок первого появления)
+        // 2) Уникальных книг
         Set<BookRecord> uniqueBooksSet = new LinkedHashSet<>(journal);
         int duplicatesCount = journal.size() - uniqueBooksSet.size();
         System.out.println("2) Уникальных книг: " + uniqueBooksSet.size() + "; повторов отброшено: " + duplicatesCount);
 
-        // 3) Группировка по жанрам в TreeMap (ключи упорядочены по алфавиту)
+        // 3) Группировка по жанрам в TreeMap
         Map<String, List<BookRecord>> booksByGenre = new TreeMap<>();
         for (BookRecord book : uniqueBooksSet) {
             booksByGenre.computeIfAbsent(book.getGenre(), k -> new ArrayList<>()).add(book);
@@ -61,7 +60,7 @@ public class Main {
             System.out.println("   " + genre + " (" + books.size() + "): " + sb.toString());
         }
 
-        // 4) Хронология: сортировка списка составным компаратором (год -> автор -> название)
+        // 4) Хронология: год -> автор -> название
         List<BookRecord> sortedBooks = new ArrayList<>(uniqueBooksSet);
         sortedBooks.sort(
                 Comparator.comparingInt(BookRecord::getYear)
